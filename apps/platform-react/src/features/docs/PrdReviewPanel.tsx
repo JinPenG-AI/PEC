@@ -103,7 +103,7 @@ export function PrdReviewPanel({
     (documentPath: string, anchor = '') => {
       const search = new URLSearchParams({ doc: documentPath });
       if (anchor) search.set('anchor', anchor);
-      return `/p/${projectId}/docs?${search.toString()}`;
+      return `${import.meta.env.BASE_URL.replace(/\/$/, '')}/p/${projectId}/docs?${search.toString()}`;
     },
     [projectId],
   );
@@ -232,9 +232,7 @@ export function PrdReviewPanel({
   }
 
   function openDocumentWindow() {
-    const search = new URLSearchParams({ doc: activeDocument });
-    if (activeHeading) search.set('anchor', activeHeading);
-    window.open(`/p/${projectId}/docs?${search.toString()}`, '_blank', 'noopener,noreferrer');
+    window.open(resolveDocumentUrl(activeDocument, activeHeading), '_blank', 'noopener,noreferrer');
   }
 
   function scrollToHeading(headingId: string) {
